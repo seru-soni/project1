@@ -2,14 +2,16 @@ import React from 'react';
 import styles from './Alert.module.css';
 
 export function Alert({
-  type = 'error',
+  type = 'error', // 'error' | 'success' | 'warning' | 'info'
+  title,
   message,
   children,
+  onDismiss,
   className = '',
   id
 }) {
   const content = message || children;
-  if (!content) return null;
+  if (!content && !title) return null;
 
   return (
     <div
@@ -47,7 +49,25 @@ export function Alert({
           </svg>
         )}
       </div>
-      <div className={styles.content}>{content}</div>
+
+      <div className={styles.content}>
+        {title && <div className={styles.title}>{title}</div>}
+        {content && <div className={styles.message}>{content}</div>}
+      </div>
+
+      {onDismiss && (
+        <button
+          type="button"
+          onClick={onDismiss}
+          className={styles.dismissBtn}
+          aria-label="Dismiss alert"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      )}
     </div>
   );
 }

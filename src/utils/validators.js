@@ -129,6 +129,74 @@ export function validateLoginForm({ email, password }) {
 }
 
 /**
+ * Validates a job posting URL.
+ * Rule: Must be a valid HTTP or HTTPS URL.
+ * @param {string} url
+ * @returns {string|null}
+ */
+export function validateJobUrl(url) {
+  if (!url || typeof url !== 'string') {
+    return 'Job posting URL is required.';
+  }
+  const trimmed = url.trim();
+  try {
+    const parsed = new URL(trimmed);
+    if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') {
+      return 'URL must start with http:// or https://';
+    }
+  } catch {
+    return 'Please enter a valid URL (e.g. https://linkedin.com/jobs/view/12345).';
+  }
+  return null;
+}
+
+/**
+ * Validates raw job description text.
+ * Rule: Min 20 characters, max 10000 characters.
+ * @param {string} text
+ * @returns {string|null}
+ */
+export function validateJobText(text) {
+  if (!text || typeof text !== 'string') {
+    return 'Job description text is required.';
+  }
+  const trimmed = text.trim();
+  if (trimmed.length < 20) {
+    return 'Job description must be at least 20 characters long.';
+  }
+  if (trimmed.length > 10000) {
+    return 'Job description exceeds maximum limit of 10,000 characters.';
+  }
+  return null;
+}
+
+/**
+ * Validates a job submission form payload.
+ * @param {{ mode: 'url'|'text', url?: string, text?: string, title?: string, company?: string }} data
+ * @returns {{ isValid: boolean, errors: Record<string, string> }}
+ */
+export function validateJobSubmission({ mode = 'url', url, text, title, company }) {
+  const errors = {};
+
+  if (!title || !title.trim()) {
+    errors.title = 'Job title is required.';
+  } else if (title.trim().length < 2 || title.trim().length > 100) {
+    errors.title = 'Job title must be between 2 and 100 characters.';
+  }
+
+  if (company && company.trim().length > 100) {
+    errors.company = 'Company name cannot exceed 100 characters.';
+  }
+
+  if (mode === 'url') {
+    const urlError = validateJobUrl(url);
+    if (urlError) errors.url = urlError;
+  } else {
+    const textError = validateJobText(text);
+    if (textError) errors.text = textError;
+  }
+
+/**
  * Validates profile update form.
  * Role cannot be modified.
  * @param {{ name?: string, email?: string }} data
@@ -148,3 +216,5 @@ export function validateProfileForm({ name, email }) {
     errors
   };
 }
+
+

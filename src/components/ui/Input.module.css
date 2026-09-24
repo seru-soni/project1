@@ -1,7 +1,7 @@
 .wrapper {
   display: flex;
   flex-direction: column;
-  gap: 0.375rem;
+  gap: var(--space-1);
   width: 100%;
 }
 
@@ -12,14 +12,14 @@
 }
 
 .label {
-  font-size: 0.875rem;
-  font-weight: 500;
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-medium);
   color: var(--text-primary);
 }
 
 .requiredMark {
   color: var(--color-danger);
-  margin-left: 0.25rem;
+  margin-left: var(--space-1);
 }
 
 .inputContainer {
@@ -31,14 +31,16 @@
 
 .input {
   width: 100%;
-  padding: 0.6875rem 0.875rem;
+  padding: 0.625rem 0.875rem;
   background-color: var(--input-bg);
   border: 1px solid var(--input-border);
   border-radius: var(--radius-md);
   color: var(--text-primary);
-  font-size: 0.9375rem;
-  line-height: 1.4;
-  transition: border-color var(--transition-fast), box-shadow var(--transition-fast), background-color var(--transition-fast);
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+  transition: border-color var(--duration-fast) var(--ease-default),
+              box-shadow var(--duration-fast) var(--ease-default),
+              background-color var(--duration-fast) var(--ease-default);
 }
 
 .input::placeholder {
@@ -53,7 +55,7 @@
 .input:focus {
   outline: none;
   border-color: var(--color-primary-400);
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.3);
+  box-shadow: var(--input-focus-ring);
 }
 
 .input.hasError {
@@ -66,22 +68,22 @@
 }
 
 .input:disabled {
-  opacity: 0.6;
+  opacity: 0.55;
   cursor: not-allowed;
   background-color: rgba(15, 23, 42, 0.4);
 }
 
 .helperText {
-  font-size: 0.75rem;
+  font-size: var(--text-xs);
   color: var(--text-muted);
 }
 
 .errorMessage {
-  font-size: 0.8125rem;
+  font-size: var(--text-xs);
   color: var(--color-danger);
   display: flex;
   align-items: center;
-  gap: 0.25rem;
+  gap: var(--space-1);
   margin-top: 0.125rem;
 }
 
@@ -97,7 +99,7 @@
   align-items: center;
   justify-content: center;
   border-radius: var(--radius-sm);
-  transition: color var(--transition-fast);
+  transition: color var(--duration-fast) var(--ease-default);
 }
 
 .togglePasswordBtn:hover {

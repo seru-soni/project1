@@ -9,6 +9,8 @@ export function Button({
   fullWidth = false,
   loading = false,
   disabled = false,
+  icon,
+  iconPosition = 'left',
   onClick,
   className = '',
   id,
@@ -29,10 +31,13 @@ export function Button({
       className={buttonClasses}
       disabled={disabled || loading}
       onClick={onClick}
+      aria-busy={loading}
       {...props}
     >
       {loading && <span className={styles.spinner} aria-hidden="true" />}
+      {!loading && icon && iconPosition === 'left' && icon}
       <span>{children}</span>
+      {!loading && icon && iconPosition === 'right' && icon}
     </button>
   );
 }
